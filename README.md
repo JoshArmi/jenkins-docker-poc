@@ -2,12 +2,16 @@
 
 To get a Jenkins container running locally...
 
-Pull the image from dockerhub
+Build the image
     ```bash
-    docker pull jenkins/jenkins:lts
+    docker build -t docker-jenkins .
     ```
 
 Run the image, with the correct ports published
     ```bash
-    docker run -p 8080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts
+    docker run -p 8080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock docker-jenkins
     ```
+
+## Known Issues
+It seems there's a problem running a Test stage, it potentially isn't creating the directory to drop the jennkins-log.txt
+Possible fix is moving to JenkinsCI-BlueOcean as the base docker image
